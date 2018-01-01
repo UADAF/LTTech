@@ -1,2 +1,2 @@
-#LTTech
+# LTTech
 Lantean technology
