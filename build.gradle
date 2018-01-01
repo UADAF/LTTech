@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.3-2"
+    }
+}
+apply plugin: 'kotlin'
+apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+repositories {
+    jcenter()
+    maven {url = "http://maven.shadowfacts.net/"}
+    maven {url = "http://maven.tterrag.com/"}
+    maven {url = "http://mvn.rx14.co.uk/repo"}
+    maven {url = "http://maven.k-4u.nl"}
+    maven {url = "http://chickenbones.net/maven"}
+    maven {url = "http://maven.cil.li/" }
+    maven {url = "http://maven.epoxide.org"}
+    maven {url = "http://dvs1.progwml6.com/files/maven"}
+    maven {url = "http://maven.covers1624.net"}
+}
+
+configurations {
+    incljar
+}
+
+version = "1.0"
+group = "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "modid"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+
+
+minecraft {
+    version = "1.12.2-14.23.1.2581"
+    runDir = "run"
+    mappings = "snapshot_20171003"
+}
+
+dependencies {
+    compile project("PearXLibMC")
+    compile group: "net.shadowfacts", name: "Forgelin", version: "1.6.0"
+    compile "codechicken:CodeChickenLib:1.12.2-3.1.5.331:deobf"
+    //deobfCompile "mezz.jei:jei_1.12.2:4.8.5.136:api"
+    compile "cofh:ThermalExpansion:1.12.2-5.3.8.38:universal"
+    compile "cofh:ThermalDynamics:1.12.2-2.3.8.16:universal"
+    compile "cofh:RedstoneArsenal:1.12.2-2.3.8.21:universal"
+    compile "cofh:ThermalCultivation:1.12.2-0.1.3.9:universal"
+    //runtime "mezz.jei:jei_1.12.2:4.8.5.136"
+    compile configurations.incljar.dependencies
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
