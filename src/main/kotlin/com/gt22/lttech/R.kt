@@ -17,8 +17,8 @@ object R {
     val RAND = Random()
     val TAB: CreativeTabs = SimpleCreativeTab(NAME) { ItemStack(ItemRegistry.naquadah) }
 
-    var log: Logger? = null
-    var cfg: LTConfig? = null
+    lateinit var log: Logger
+    lateinit var cfg: LTConfig
 
     fun rl(path: String) = ResourceLocation(MODID, path)
 

@@ -14,12 +14,8 @@ import java.lang.reflect.Field
 
 object ItemRegistry {
 
-    var naquadah: ItemNaquadah? = null
-    var nqreactor: ItemBlockBase? = null
-
-
-
-
+    lateinit var naquadah: ItemNaquadah
+    lateinit var nqreactor: ItemBlockBase
 
     fun reg() {
         val r = GameRegistry.findRegistry(Item::class.java)

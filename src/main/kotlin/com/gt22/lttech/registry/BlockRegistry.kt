@@ -9,7 +9,7 @@ import ru.pearx.libmc.client.models.IModelProvider
 
 object BlockRegistry {
 
-    var nqreactor: NaquadahReactor? = null
+    lateinit var nqreactor: NaquadahReactor
 
     fun reg() {
         val r = GameRegistry.findRegistry(Block::class.java)

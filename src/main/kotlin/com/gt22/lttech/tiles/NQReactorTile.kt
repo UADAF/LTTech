@@ -60,10 +60,12 @@ class NQReactorTile(var facing: EnumFacing? = null) : TileSyncable(), ITickable,
 
     private fun transferEnergy() {
         validFaces.forEach {
-            val delta = EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, it, Math.min(eng.maxExtract, eng.energyStored), true)
-            if (delta != 0) {
-                EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, it, delta, false)
-                eng.extractEnergy(delta, false)
+            if(it != null) {
+                val delta = EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, it, Math.min(eng.maxExtract, eng.energyStored), true)
+                if (delta != 0) {
+                    EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, it, delta, false)
+                    eng.extractEnergy(delta, false)
+                }
             }
         }
     }
@@ -71,8 +73,8 @@ class NQReactorTile(var facing: EnumFacing? = null) : TileSyncable(), ITickable,
     val EnergyStorage.spaceLeft get() = this.maxEnergyStored - this.energyStored
 
     private fun generate() {
-        if (eng.spaceLeft < R.cfg!!.reactorMinEnergyGen || !hasNaquadah()) return
-        eng.modifyEnergyStored(RandomUtils.nextInt(R.cfg!!.reactorMinEnergyGen, R.cfg!!.reactorMaxEnergyGen, R.RAND))
+        if (eng.spaceLeft < R.cfg.reactorMinEnergyGen || !hasNaquadah()) return
+        eng.modifyEnergyStored(RandomUtils.nextInt(R.cfg.reactorMinEnergyGen, R.cfg.reactorMaxEnergyGen, R.RAND))
         naquadahLeft--
     }
 
@@ -81,7 +83,7 @@ class NQReactorTile(var facing: EnumFacing? = null) : TileSyncable(), ITickable,
         val stack = inv.getStackInSlot(0)
         if (!stack.isEmpty && stack.item == ItemRegistry.naquadah) {
             stack.grow(-1)
-            naquadahLeft = R.cfg!!.burstsPerNaquadah
+            naquadahLeft = R.cfg.burstsPerNaquadah
             sendUpdatesToClients()
             return true
         }

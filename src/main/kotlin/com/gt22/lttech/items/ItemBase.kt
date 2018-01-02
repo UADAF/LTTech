@@ -5,7 +5,6 @@ import ru.pearx.libmc.common.items.ItemBase
 
 open class ItemBase(name: String) : ItemBase() {
 
-
     init {
         registryName = R.rl(name)
         unlocalizedName = name

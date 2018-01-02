@@ -17,7 +17,7 @@ import ru.pearx.libmc.client.gui.DrawingTools
 
 class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : GuiContainer(container) {
 
-    var texture = ResourceLocation(R.MODID, "textures/gui/nr/nqr.png")
+    val texture = ResourceLocation(R.MODID, "textures/gui/nr/nqr.png")
 
     override fun initGui() {
         super.initGui()
@@ -74,7 +74,7 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
     }
 
     private fun drawNaquadah() {
-        val max = R.cfg!!.burstsPerNaquadah
+        val max = R.cfg.burstsPerNaquadah
         val now = tile.naquadahLeft
         val barWidth = 150
         val barHeight = 7

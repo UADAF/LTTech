@@ -12,12 +12,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 @Mod(modid = R.MODID, name = R.NAME, version = R.VERSION, modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter", modLanguage = "kotlin", dependencies = "required-after:forgelin;")
 object LTTech {
 
-
-
     @SidedProxy(clientSide = "com.gt22.lttech.proxy.ClientProxy", serverSide = "com.gt22.lttech.proxy.CommonProxy")
     var proxy: CommonProxy = CommonProxy() //Placeholder, forge will replace this, but this allow field to be non-null
-
-
 
 
     @Mod.EventHandler
