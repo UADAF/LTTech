@@ -16,6 +16,7 @@ object ItemRegistry {
 
     lateinit var naquadah: ItemNaquadah
     lateinit var nqreactor: ItemBlockBase
+    lateinit var transferRings: ItemBlockBase
 
     fun reg() {
         val r = GameRegistry.findRegistry(Item::class.java)
@@ -45,7 +46,7 @@ object ItemRegistry {
             field.set(this, ib)
             if (ib is IModelProvider) LTTech.proxy.setupModel(ib)
         } catch (e: NoSuchFieldException) {
-            R.log?.warn("Block ${field.name} not found! Unable to register ItemBlock")
+            R.log.warn("Block ${field.name} not found! Unable to register ItemBlock")
         }
 
     }
