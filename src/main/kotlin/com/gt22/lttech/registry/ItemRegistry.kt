@@ -16,6 +16,7 @@ object ItemRegistry {
 
     lateinit var naquadah: ItemNaquadah
     lateinit var nqreactor: ItemBlockBase
+    lateinit var transferRings: ItemBlockBase
 
     fun reg() {
         val r = GameRegistry.findRegistry(Item::class.java)
