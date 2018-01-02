@@ -37,7 +37,7 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
 
     }
 
-    override fun actionPerformed(button: GuiButton?) = NetworkHandler.sendToServer(ReactorTogglePacket(tile.pos))
+    override fun actionPerformed(button: GuiButton) = NetworkHandler.sendToServer(ReactorTogglePacket(tile.pos))
 
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {

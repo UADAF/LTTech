@@ -23,19 +23,19 @@ import net.minecraftforge.items.CapabilityItemHandler
 import ru.pearx.libmc.common.blocks.controllers.HorizontalFacingController
 
 class NaquadahReactor : BlockBase(Material.IRON, "nqreactor") {
-    override fun hasTileEntity(state: IBlockState?): Boolean = true
-    override fun createTileEntity(world: World?, state: IBlockState?): TileEntity? = NQReactorTile(state!!.getValue(HorizontalFacingController.FACING_H))
-    override fun onBlockActivated(worldIn: World?, pos: BlockPos?, state: IBlockState?, playerIn: EntityPlayer?, hand: EnumHand?, facing: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        playerIn?.openGui(LTTech, GuiHandler.NQ_REACTOR, worldIn, pos!!.x, pos.y, pos.z)
+    override fun hasTileEntity(state: IBlockState): Boolean = true
+    override fun createTileEntity(world: World, state: IBlockState): TileEntity? = NQReactorTile(state.getValue(HorizontalFacingController.FACING_H))
+    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+        playerIn.openGui(LTTech, GuiHandler.NQ_REACTOR, worldIn, pos.x, pos.y, pos.z)
         return true
     }
 
-    override fun onBlockHarvested(worldIn: World?, pos: BlockPos?, state: IBlockState?, player: EntityPlayer?) {
-        if (worldIn!!.isRemote) return
+    override fun onBlockHarvested(worldIn: World, pos: BlockPos, state: IBlockState, player: EntityPlayer) {
+        if (worldIn.isRemote) return
         val te: NQReactorTile? = worldIn.getTileEntity(pos) as NQReactorTile?
         val stack: ItemStack? = te?.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)?.getStackInSlot(0)
         stack?.let {
-            val ei = EntityItem(worldIn, pos!!.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), it)
+            val ei = EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), it)
             ei.motionY = 0.3
             worldIn.spawnEntity(ei)
         }
@@ -53,11 +53,11 @@ class NaquadahReactor : BlockBase(Material.IRON, "nqreactor") {
 
     override fun getStateFromMeta(meta: Int): IBlockState = HorizontalFacingController.getStateFromMeta(defaultState, meta)
 
-    override fun getMetaFromState(state: IBlockState?): Int = HorizontalFacingController.getMetaFromState(state)
+    override fun getMetaFromState(state: IBlockState): Int = HorizontalFacingController.getMetaFromState(state)
 
-    override fun getStateForPlacement(world: World?, pos: BlockPos?, facing: EnumFacing?, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase?, hand: EnumHand?): IBlockState = HorizontalFacingController.getStateForPlacement(defaultState, placer).withRotation(Rotation.CLOCKWISE_90)
+    override fun getStateForPlacement(world: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase, hand: EnumHand): IBlockState = HorizontalFacingController.getStateForPlacement(defaultState, placer).withRotation(Rotation.CLOCKWISE_90)
 
-    override fun withMirror(state: IBlockState?, mirrorIn: Mirror?): IBlockState = HorizontalFacingController.withMirror(state, mirrorIn)
+    override fun withMirror(state: IBlockState, mirrorIn: Mirror): IBlockState = HorizontalFacingController.withMirror(state, mirrorIn)
 
-    override fun withRotation(state: IBlockState?, rot: Rotation?): IBlockState = HorizontalFacingController.withRotation(state, rot)
+    override fun withRotation(state: IBlockState, rot: Rotation): IBlockState = HorizontalFacingController.withRotation(state, rot)
 }

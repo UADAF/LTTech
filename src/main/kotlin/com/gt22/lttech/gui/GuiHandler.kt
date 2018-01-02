@@ -13,18 +13,18 @@ object GuiHandler : IGuiHandler {
 
     val NQ_REACTOR = 0
 
-    override fun getServerGuiElement(ID: Int, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int): Any? {
-        val tile: TileEntity? = world?.getTileEntity(BlockPos(x, y, z))
+    override fun getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any? {
+        val tile: TileEntity? = world.getTileEntity(BlockPos(x, y, z))
         return when(ID) {
-            NQ_REACTOR -> NQReactorContainer(player!!.inventory, tile as NQReactorTile)
+            NQ_REACTOR -> NQReactorContainer(player.inventory, tile as NQReactorTile)
             else -> null
         }
     }
 
-    override fun getClientGuiElement(ID: Int, player: EntityPlayer?, world: World?, x: Int, y: Int, z: Int): Any? {
-        val tile: TileEntity? = world?.getTileEntity(BlockPos(x, y, z))
+    override fun getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any? {
+        val tile: TileEntity? = world.getTileEntity(BlockPos(x, y, z))
         return when(ID) {
-            NQ_REACTOR -> NQReactorGui(tile as NQReactorTile, NQReactorContainer(player!!.inventory, tile))
+            NQ_REACTOR -> NQReactorGui(tile as NQReactorTile, NQReactorContainer(player.inventory, tile))
             else -> null
         }
     }

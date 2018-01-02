@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 object LTTech {
 
     @SidedProxy(clientSide = "com.gt22.lttech.proxy.ClientProxy", serverSide = "com.gt22.lttech.proxy.CommonProxy")
-    var proxy: CommonProxy = CommonProxy() //Placeholder, forge will replace this, but this allow field to be non-null
+    lateinit var proxy: CommonProxy
 
 
     @Mod.EventHandler

@@ -11,11 +11,11 @@ import ru.pearx.libmc.common.networking.ByteBufTools
 class ReactorTogglePacket(var pos: BlockPos = BlockPos(0, 0, 0)) : IMessage {
 
 
-    override fun fromBytes(buf: ByteBuf?) {
+    override fun fromBytes(buf: ByteBuf) {
         pos = ByteBufTools.readBlockPos(buf)
     }
 
-    override fun toBytes(buf: ByteBuf?) {
+    override fun toBytes(buf: ByteBuf) {
         ByteBufTools.writeBlockPos(buf, pos)
     }
 

@@ -45,7 +45,7 @@ object ItemRegistry {
             field.set(this, ib)
             if (ib is IModelProvider) LTTech.proxy.setupModel(ib)
         } catch (e: NoSuchFieldException) {
-            R.log?.warn("Block ${field.name} not found! Unable to register ItemBlock")
+            R.log.warn("Block ${field.name} not found! Unable to register ItemBlock")
         }
 
     }
