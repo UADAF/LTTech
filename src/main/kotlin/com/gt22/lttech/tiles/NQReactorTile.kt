@@ -17,7 +17,6 @@ import ru.pearx.libmc.common.tiles.TileSyncable
 
 class NQReactorTile(var facing: EnumFacing?) : TileSyncable(), ITickable, IEnergyProvider {
 
-
     private inner class Handler : ItemStackHandler(1) {
 
         override fun onContentsChanged(slot: Int) {
@@ -27,14 +26,31 @@ class NQReactorTile(var facing: EnumFacing?) : TileSyncable(), ITickable, IEnerg
 
     }
 
-    constructor() : this(null)
-
     private val eng: SyncableEnergyStorage = SyncableEnergyStorage(60000000, 100000, sync = this::sendUpdatesToClients)
     private val inv = Handler()
+    private var tickCounter = 0
     var isActive = true
-
+        private set
     var naquadahLeft: Int = 0
         private set
+
+    constructor() : this(null)
+
+    fun toggleState(): Boolean {
+        isActive = !isActive
+        sendUpdatesToClients()
+        return this.isActive
+    }
+
+    private fun transferEnergy() {
+        for (f in arrayOf(facing, facing!!.opposite)) {
+            val delta = EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, f, Math.min(eng.maxExtract, eng.energyStored), true)
+            if (delta != 0) {
+                EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, f, delta, false)
+                eng.extractEnergy(delta, false)
+            }
+        }
+    }
 
     override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean
             = capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing)
@@ -42,7 +58,6 @@ class NQReactorTile(var facing: EnumFacing?) : TileSyncable(), ITickable, IEnerg
     override fun <T : Any?> getCapability(capability: Capability<T>, facing: EnumFacing?): T?
             = if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inv) else super.getCapability(capability, facing)
 
-    var tickCounter = 0
     override fun update() {
         if (world.isRemote) return
         transferEnergy()
@@ -64,16 +79,6 @@ class NQReactorTile(var facing: EnumFacing?) : TileSyncable(), ITickable, IEnerg
         }
     }
 
-    private fun transferEnergy() {
-        for (f in arrayOf(facing, facing!!.opposite)) {
-            val delta = EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, f, Math.min(eng.maxExtract, eng.energyStored), true)
-            if (delta != 0) {
-                EnergyHelper.insertEnergyIntoAdjacentEnergyReceiver(this, f, delta, false)
-                eng.extractEnergy(delta, false)
-            }
-        }
-    }
-
     override fun getMaxEnergyStored(from: EnumFacing?): Int {
         if(!canConnectEnergy(from)) return 0
         return eng.maxEnergyStored
@@ -85,19 +90,12 @@ class NQReactorTile(var facing: EnumFacing?) : TileSyncable(), ITickable, IEnerg
     }
 
     override fun extractEnergy(from: EnumFacing?, maxExtract: Int, simulate: Boolean): Int {
-        println(from)
         if(!canConnectEnergy(from)) return 0
         return eng.extractEnergy(maxExtract, simulate)
     }
 
     override fun canConnectEnergy(from: EnumFacing?): Boolean {
         return from == null || from == facing || from == facing!!.opposite
-    }
-
-    fun toggleState(): Boolean {
-        isActive = !isActive
-        sendUpdatesToClients()
-        return this.isActive
     }
 
     override fun writeToNBT(nbt: NBTTagCompound): NBTTagCompound {

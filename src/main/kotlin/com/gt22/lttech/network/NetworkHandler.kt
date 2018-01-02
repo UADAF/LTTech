@@ -12,8 +12,9 @@ import net.minecraftforge.fml.relauncher.Side
 object NetworkHandler {
     val ch = SimpleNetworkWrapper(R.MODID)
     var id = 0
+
     fun reg() {
-        ch.registerMessage(ReactorTogglePacket.Handler::class.java, ReactorTogglePacket::class.java, id++,Side.SERVER)
+        ch.registerMessage(ReactorTogglePacket.Handler::class.java, ReactorTogglePacket::class.java, id++, Side.SERVER)
     }
 
     fun sendToAll(msg: IMessage) = ch.sendToAll(msg)

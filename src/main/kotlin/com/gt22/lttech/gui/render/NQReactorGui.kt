@@ -54,6 +54,21 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
         drawNaquadah()
     }
 
+    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
+        GlStateManager.color(1f, 1f, 1f)
+        val k = (this.width - this.xSize) / 2
+        val l = (this.height - this.ySize) / 2
+        mc.renderEngine.bindTexture(texture)
+        drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize)
+        GlStateManager.color(1f, 1f, 1f)
+    }
+
+    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
+        drawDefaultBackground()
+        super.drawScreen(mouseX, mouseY, partialTicks)
+        renderHoveredToolTip(mouseX, mouseY)
+    }
+
     private fun drawEnergy() {
         val max = tile.getMaxEnergyStored(null)
         val now = tile.getEnergyStored(null)
@@ -78,20 +93,7 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
         drawTexturedModalRect(13, 68, 0, 180, Math.round(Math.floor((barWidth * prec))).toInt(), barHeight)
     }
 
-    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
-        GlStateManager.color(1f, 1f, 1f)
-        val k = (this.width - this.xSize) / 2
-        val l = (this.height - this.ySize) / 2
-        mc.renderEngine.bindTexture(texture)
-        drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize)
-        GlStateManager.color(1f, 1f, 1f)
-    }
 
-    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        drawDefaultBackground()
-        super.drawScreen(mouseX, mouseY, partialTicks)
-        renderHoveredToolTip(mouseX, mouseY)
-    }
 
 
 
