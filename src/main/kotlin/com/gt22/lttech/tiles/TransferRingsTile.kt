@@ -26,8 +26,10 @@ class TransferRingsTile : TileSyncable(), IEnergyReceiver, ITickable, IPosReceiv
     private var tickCounter: Int = 0
     private var structureState: Boolean = true
     private val eng: SyncableEnergyStorage = SyncableEnergyStorage(600000,10000,0,this::sendUpdatesToClients)
-    private var upPos: BlockPos? = null
-    private var downPos: BlockPos? = null
+    var upPos: BlockPos? = null
+        private set
+    var downPos: BlockPos? = null
+        private set
 
     enum class TransferResult {
         SUCCESS,
