@@ -74,7 +74,7 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
     }
 
     private fun drawNaquadah() {
-        val max = R.cfg.burstsPerNaquadah
+        val max = R.cfg.reactorBurstsPerNaquadah
         val now = tile.naquadahLeft
         val barWidth = 150
         val barHeight = 7

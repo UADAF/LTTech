@@ -15,7 +15,7 @@ object R {
     const val NAME = "Lantean Technology"
     const val VERSION = "1.0"
     val RAND = Random()
-    val TAB: CreativeTabs = SimpleCreativeTab(NAME) { ItemStack(ItemRegistry.naquadah) }
+    val TAB: CreativeTabs = SimpleCreativeTab(MODID) { ItemStack(ItemRegistry.naquadah) }
 
     lateinit var log: Logger
     lateinit var cfg: LTConfig

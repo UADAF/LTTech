@@ -83,7 +83,7 @@ class NQReactorTile(var facing: EnumFacing? = null) : TileSyncable(), ITickable,
         val stack = inv.getStackInSlot(0)
         if (!stack.isEmpty && stack.item == ItemRegistry.naquadah) {
             stack.grow(-1)
-            naquadahLeft = R.cfg.burstsPerNaquadah
+            naquadahLeft = R.cfg.reactorBurstsPerNaquadah
             sendUpdatesToClients()
             return true
         }

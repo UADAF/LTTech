@@ -2,7 +2,9 @@ package com.gt22.lttech.registry
 
 import com.gt22.lttech.LTTech
 import com.gt22.lttech.R
+import com.gt22.lttech.items.ControlCrystal
 import com.gt22.lttech.items.ItemNaquadah
+import com.gt22.lttech.items.TransferRingsRemote
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
@@ -15,16 +17,19 @@ import java.lang.reflect.Field
 object ItemRegistry {
 
     lateinit var naquadah: ItemNaquadah
+    lateinit var transferRingsRemote: TransferRingsRemote
+    lateinit var controlCrystal: ControlCrystal
+
     lateinit var nqreactor: ItemBlockBase
     lateinit var transferRings: ItemBlockBase
 
     fun reg() {
         val r = GameRegistry.findRegistry(Item::class.java)
-        ItemRegistry::class.java.declaredFields.filter { field -> Item::class.java.isAssignableFrom(field.type) }.forEach { field ->
-            if (ItemBlock::class.java.isAssignableFrom(field.type)) {
-                regItemBlock(field, r)
+        ItemRegistry::class.java.declaredFields.filter { Item::class.java.isAssignableFrom(it.type) }.forEach {
+            if (ItemBlock::class.java.isAssignableFrom(it.type)) {
+                regItemBlock(it, r)
             } else {
-                regItem(field, r)
+                regItem(it, r)
             }
         }
     }
