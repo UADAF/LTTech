@@ -16,6 +16,11 @@ object ItemRegistry {
 
     var naquadah: ItemNaquadah? = null
     var nqreactor: ItemBlockBase? = null
+
+
+
+
+
     fun reg() {
         val r = GameRegistry.findRegistry(Item::class.java)
         ItemRegistry::class.java.declaredFields.filter { field -> Item::class.java.isAssignableFrom(field.type) }.forEach { field ->

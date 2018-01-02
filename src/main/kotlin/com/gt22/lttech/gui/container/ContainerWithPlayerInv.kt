@@ -7,9 +7,10 @@ import net.minecraft.inventory.Slot
 import net.minecraft.item.ItemStack
 
 abstract class ContainerWithPlayerInv(playerInv: IInventory, teslots: List<Slot>) : Container() {
+    val slotCount: Int = teslots.size
 
     init {
-        teslots.forEach {addSlotToContainer(it)}
+        teslots.forEach { addSlotToContainer(it) }
         for (y in 0..2) for (x in 0..8) this.addSlotToContainer(Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 84 + y * 18))
         for (x in 0..8) this.addSlotToContainer(Slot(playerInv, x, 8 + x * 18, 142))
     }
@@ -20,11 +21,11 @@ abstract class ContainerWithPlayerInv(playerInv: IInventory, teslots: List<Slot>
         if (slot.hasStack) {
             val current = slot.stack
             previous = current.copy()
-            if (fromSlot < 2) {
-                if (!this.mergeItemStack(current, 3, 37, true))
+            if (fromSlot <= slotCount) {
+                if (!this.mergeItemStack(current, slotCount + 1, slotCount + 36, true))
                     return ItemStack.EMPTY
             } else {
-                if (!this.mergeItemStack(current, 0, 1, false))
+                if (!this.mergeItemStack(current, 0, slotCount, false))
                     return ItemStack.EMPTY
             }
             if (current.count == 0)

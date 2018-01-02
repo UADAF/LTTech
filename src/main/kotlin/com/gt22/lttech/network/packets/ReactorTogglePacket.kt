@@ -19,7 +19,7 @@ class ReactorTogglePacket(var pos: BlockPos = BlockPos(0, 0, 0)) : IMessage {
         ByteBufTools.writeBlockPos(buf, pos)
     }
 
-    class Handler : IMessageHandler<ReactorTogglePacket, IMessage> {
+    object Handler : IMessageHandler<ReactorTogglePacket, IMessage> {
 
         override fun onMessage(message: ReactorTogglePacket, ctx: MessageContext): IMessage? {
             (ctx.serverHandler.player.world.getTileEntity(message.pos) as NQReactorTile).toggleState()

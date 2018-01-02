@@ -8,12 +8,12 @@ import kotlin.reflect.KClass
 
 object TileRegistry {
 
-    private fun <T : TileEntity> regTile(tile: KClass<T>) {
+    private fun <T : TileEntity> r(tile: KClass<T>) {
         GameRegistry.registerTileEntity(tile.java, "${R.MODID}:${tile.simpleName}")
     }
 
     fun reg() {
-        regTile(NQReactorTile::class)
+        r(NQReactorTile::class)
     }
 
 }

@@ -7,6 +7,7 @@ class LTConfig(cfg: Configuration) {
     val burstsPerNaquadah: Int
     val reactorMinEnergyGen: Int
     val reactorMaxEnergyGen: Int
+
     init {
         cfg.load()
         burstsPerNaquadah = cfg["reactor", "burstsPerNaquadah", 90, "Number of energy bursts from one naquadah cell"].int

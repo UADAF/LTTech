@@ -33,23 +33,14 @@ class NQReactorGui(val tile: NQReactorTile, container: NQReactorContainer) : Gui
                     this.packedFGColour = 0xff0000
             }
         }
-        buttonList.add(activateBtn)
-        activateBtn.setWidth(10)
-        if (tile.isActive)
-            activateBtn.packedFGColour = 0x00ff00
-        else
-            activateBtn.packedFGColour = 0xff0000
-        activateBtn.height = activateBtn.width
+        buttonList.add(activateBtn.apply { width = 10; height = width })
 
     }
 
-    override fun actionPerformed(button: GuiButton?) {
-        NetworkHandler.sendToServer(ReactorTogglePacket(tile.pos))
-    }
+    override fun actionPerformed(button: GuiButton?) = NetworkHandler.sendToServer(ReactorTogglePacket(tile.pos))
 
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY)
         drawEnergy()
         drawNaquadah()
     }
