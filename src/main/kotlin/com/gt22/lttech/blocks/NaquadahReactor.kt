@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.Mirror
 import net.minecraft.util.Rotation
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
@@ -38,6 +39,15 @@ class NaquadahReactor : BlockBase(Material.IRON, "nqreactor") {
             val ei = EntityItem(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), it)
             ei.motionY = 0.3
             worldIn.spawnEntity(ei)
+        }
+    }
+
+    override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+        val facing = state.getValue(HorizontalFacingController.FACING_H)
+        return when (facing) {
+            EnumFacing.EAST, EnumFacing.WEST -> AxisAlignedBB(0.0, 0.0, 0.35, 1.0, 0.4, 0.65)
+            EnumFacing.NORTH, EnumFacing.SOUTH -> AxisAlignedBB(0.35, 0.0, 0.0, 0.65, 0.4, 1.0)
+            else -> super.getBoundingBox(state, source, pos) //Should not happen
         }
     }
 
