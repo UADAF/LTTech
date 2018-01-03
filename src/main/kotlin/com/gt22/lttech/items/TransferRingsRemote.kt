@@ -41,7 +41,8 @@ class TransferRingsRemote : ItemBase("transferRingsRemote") {
         val te = worldIn.getTileEntity(pos) as? TransferRingsTile
         if(!worldIn.isRemote && te != null) {
             val msg = """Pos 1: ${formatPos(te.upPos)}
-                         |Pos 2: ${formatPos(te.downPos)}""".trimMargin()
+                        |Pos 2: ${formatPos(te.downPos)}
+                        |Energy: ${te.getEnergyStored(null)} / ${te.getMaxEnergyStored(null)} RF""".trimMargin()
             player.sendMessage(TextComponentString(msg))
             return EnumActionResult.SUCCESS
         }
